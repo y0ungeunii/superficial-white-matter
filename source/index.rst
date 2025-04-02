@@ -1,3 +1,21 @@
+.. **Superficial White Matter**
+   ============================
+.. title:: Supericial White Matter
+
+.. raw:: html
+
+   <style type="text/css">
+      hr {
+      width: 100%;
+      height: 1px;
+      background-color: #5D4BB7;
+      margin-top: 24px;
+      }
+   </style>
+
+**Welcome to SWM documentation!**
+==========================================
+
 .. Superficial White Matter documentation master file, created by
    sphinx-quickstart on 2024-04-02.
    You can adapt this file completely to your liking, but it should at least
@@ -115,3 +133,35 @@ Usage:
 .. code-block:: bash
 
    surface_generator.py hemi-L_label-white.surf.gii laplace-wm.nii.gz
+
+
+
+.. raw:: html
+
+   <br>
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Getting started
+   
+   pages/installation
+   pages/SWM_background
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Tutorials
+   
+   pages/tutorials_overview
+   pages/tutorial_BigBrain
+   pages/tutorial_AheadBrain
+   pages/tutorial_MRI
+
+
+__________________________________________________________________________________________________
+
+.. raw:: html
+
+   <br>
