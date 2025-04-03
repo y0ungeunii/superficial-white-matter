@@ -1,2 +1,2 @@
-Installation
+Tutorial MRI
 ============

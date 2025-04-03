@@ -29,13 +29,6 @@
 Superficial White Matter
 ========================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   examples
-   references
-
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.11510179.svg
    :target: https://doi.org/10.5281/zenodo.11510179
 
@@ -154,7 +147,6 @@ Usage:
    :hidden:
    :caption: Tutorials
    
-   pages/tutorials_overview
    pages/tutorial_BigBrain
    pages/tutorial_AheadBrain
    pages/tutorial_MRI

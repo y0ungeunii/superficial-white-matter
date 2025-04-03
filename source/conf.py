@@ -5,6 +5,11 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath('./'))
+
 
 project = 'superficial-white-matter'
 copyright = '2025, Youngeun Hwang'
@@ -36,16 +41,15 @@ source_suffix = {
 # source_suffix = '.rst'
 source_suffix = ['.rst', '.md']
 
+# -- Sphinx Gallery Configuration --
 sphinx_gallery_conf = {
-    'examples_dirs': '../../tutorials',
-    # 'plot_gallery': 'False',
+    'examples_dirs': 'examples',  # Directory where your example scripts are located
+    'gallery_dirs': 'auto_examples',  # Output directory for generated galleries
     'thumbnail_size': (250, 250),
-    # 'image_scrapers': ('matplotlib', _get_sg_image_scraper()),
-    # 'within_subsection_order': FileNameSortKey,
     'download_all_examples': False,
     'remove_config_comments': True,
-    # 'run_stale_examples': True,
 }
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
