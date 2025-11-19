@@ -87,14 +87,21 @@ def laplace(init_coords, fg, source, sink, kernelSize=3, convergence_threshold=1
 print('starting laplace solver')
 in_seg = sys.argv[1]
 out_laplace = sys.argv[2]
-
+version = sys.argv[3]
 # parameters
 convergence_threshold = 1e-4
 max_iters = 1000
 kernelSize = 3  # in voxels
 alpha = 0.1  # add some weighting of the distance transform
-fg_labels = [41, 2]
-src_labels = np.concatenate((np.arange(1000, 2999), [0]))
+if version == "freesurfer":
+            fg_labels = [41, 2]
+            src_labels = np.concatenate((np.arange(1000, 2999), [0]))
+elif version == "bigbrain":
+            fg_labels = [2]
+            src_labels = [1]
+elif version == "ahead":
+            fg_labels = [2]
+            src_labels = [1]
 # sink_labels = [4, 43, 31, 63, 5, 44] # ventricles
 
 
@@ -149,3 +156,21 @@ coords = coords * (1 - alpha) + (init_coords * alpha)
 print('saving')
 coords_nib = nib.Nifti1Image(coords, lbl_nib.affine, lbl_nib.header)
 nib.save(coords_nib, out_laplace)
+
+dx,dy,dz = np.gradient(coords)
+i_d = nib.Nifti1Image(dx, lbl_nib.affine, lbl_nib.header)
+fout = out_laplace + '_dx.nii.gz'
+print('  ' + fout)
+nib.save(i_d, fout)
+
+i_d = nib.Nifti1Image(dy, lbl_nib.affine, lbl_nib.header)
+fout = out_laplace + '_dy.nii.gz'
+print('  ' + fout)
+nib.save(i_d, fout)
+
+i_d = nib.Nifti1Image(dz, lbl_nib.affine, lbl_nib.header)
+fout = out_laplace + '_dz.nii.gz'
+print('  ' + fout)
+nib.save(i_d, fout)
+
+
