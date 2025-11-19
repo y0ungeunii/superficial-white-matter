@@ -35,6 +35,7 @@ import numpy as np
 from joblib import Parallel, delayed, dump, load
 import os
 from tqdm import tqdm
+import time
 
 
 def avg_neighbours(F, cdat, n):
@@ -133,6 +134,7 @@ def shift_surface(in_surf, in_laplace, out_surf_prefix, depth_mm=[1, 2, 3], n_jo
     -------
     None
     """
+    start_time = time.time()
     print("starting surface shift")
 
     # load data
@@ -153,7 +155,7 @@ def shift_surface(in_surf, in_laplace, out_surf_prefix, depth_mm=[1, 2, 3], n_jo
 
     laplace = nib.load(in_laplace)
     lp = laplace.get_fdata()
-    print("loaded data and parameters")
+    print(f"loaded data and parameters in {time.time() - start_time:.2f}s")
 
     # Get image resolution
     xres = laplace.affine[0, 0]
@@ -170,14 +172,18 @@ def shift_surface(in_surf, in_laplace, out_surf_prefix, depth_mm=[1, 2, 3], n_jo
     max_iters = int(np.max(np.diff(depth_vox)) / step_size) * 10
 
     # laplace to gradient
+    gradient_start = time.time()
     dx, dy, dz = np.gradient(lp)
 
     # Scale the gradients by the image resolutions to handle anisotropy
     dx = dx / xres
     dy = dy / yres
     dz = dz / zres
+    print(f"computed gradients in {time.time() - gradient_start:.2f}s")
+
     for nsteps, d_str in zip(np.diff([0] + depth_mm) / step_size, depth_str):
-        print("processing depth: ", d_str)
+        iter_start = time.time()
+        print(f"processing depth: {d_str}")
         process_depth(
             V,
             F,
@@ -192,6 +198,9 @@ def shift_surface(in_surf, in_laplace, out_surf_prefix, depth_mm=[1, 2, 3], n_jo
             surf,
             n_jobs,
         )
+        print(f"generated surface at depth {d_str}mm in {time.time() - iter_start:.2f}s")
+    
+    print(f"Total surface generation time: {time.time() - start_time:.2f}s")
 
 
 if __name__ == "__main__":
